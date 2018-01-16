@@ -2,8 +2,13 @@ package com.example.fortebytes.stormapp;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,42 +16,50 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
 
-    private ListView lv_news_feed;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        lv_news_feed = (ListView) findViewById(R.id.lv_homepage);
-
         // Instanciating an array list (you don't need to do this,
         // you already have yours).
-        List<String> your_array_list = new ArrayList<String>();
-        your_array_list.add("foo");
-        your_array_list.add("bar");
+        ArrayList<Post> your_array_list = new ArrayList<Post>();
 
-        // This is the array adapter, it takes the context of the activity as a
-        // first parameter, the type of list view as a second parameter and your
-        // array as a third parameter.
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
-                this,
-                android.R.layout.simple_list_item_1,
-                your_array_list );
+        //Populating list
+        Post posty = new Post("foo", "bar","foobar");
+        your_array_list.add(posty);
+        Post posty2 = new Post("bar", "foo","barfoo");
+        your_array_list.add(posty2);
+        Post posty3 = new Post("foo", "bar","foobar");
+        your_array_list.add(posty3);
+        Post posty4 = new Post("bar", "foo","barfoo");
+        your_array_list.add(posty4);
+        Post posty5 = new Post("foo", "bar","foobar");
+        your_array_list.add(posty5);
+        Post posty6 = new Post("bar", "foo","barfoo");
+        your_array_list.add(posty6);
+        Post posty7 = new Post("foo", "bar","foobar");
+        your_array_list.add(posty7);
+        Post posty8 = new Post("bar", "foo","barfoo");
+        your_array_list.add(posty8);
 
-        lv_news_feed.setAdapter(arrayAdapter);
+        // Create the adapter to convert the array to views
+        PostsAdapters adapter = new PostsAdapters(this, your_array_list);
+        // Attach the adapter to a ListView
+        ListView listView = (ListView) findViewById(R.id.lv_homepage);
+        listView.setAdapter(adapter);
 
-    }
+        listView.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position,
+                                    long id) {
 
-    public class Item {
+                //String item = ((TextView)view).getText().toString();
 
-        private String mImageUrl;
-        private String mTitle;
-        private String mDescription;
+                Toast.makeText(getBaseContext(), position + "", Toast.LENGTH_SHORT).show();
 
-        // constructor, getters and setters elided
-
+            }
+        });
 
     }
 
